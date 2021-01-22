@@ -1,14 +1,14 @@
 
 // Step 1: Set up our chart
 //= ================================
-var svgWidth = 980;
+var svgWidth = 1000;
 var svgHeight = 500;
 
 var margin = {
   top: 20,
   right: 40,
   bottom: 90,
-  left: 50
+  left: 90
 };
 
 var width = svgWidth - margin.left - margin.right;
@@ -248,7 +248,8 @@ d3.csv("assets/data/data.csv").then(function(journalData) {
             .classed("inactive", false);
         }
         else {
-          ageLabel("active", false)
+          ageLabel
+          .classed("active", false)
           .classed("inactive", true)
         }
     }
