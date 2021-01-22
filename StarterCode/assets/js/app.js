@@ -56,6 +56,8 @@ function renderCircles(circlesGroup, newXScale, chosenXAxis) {
   circlesGroup.transition()
     .duration(1000)
     .attr("cx", d => newXScale(d[chosenXAxis]));
+
+  return circlesGroup;
 }
 
 // function to update circlesGroup with new tooltip
@@ -201,19 +203,25 @@ d3.csv("assets/data/data.csv").then(function(journalData) {
         circlesGroup = updateToolTip(chosenXAxis, circlesGroup);
 
         //changes classes to change bold text
-        if (chosenXAxis === "smokes") {
-          albumsLabel
+        if (chosenXAxis === "poverty") {
+          povertyLabel
             .classed("active", true)
             .classed("inactive", false);
-          hairLengthLabel
+          incomeLabel
+            .classed("active", false)
+            .classed("inactive", true);
+          ageLabel
             .classed("active", false)
             .classed("inactive", true);
         }
         else {
-          albumsLabel
+          povertyLabel
             .classed("active", false)
             .classed("inactive", true);
-          hairLengthLabel
+          incomeLabel
+            .classed("active", true)
+            .classed("inactive", false);
+          ageLabel
             .classed("active", true)
             .classed("inactive", false);
         }
