@@ -92,7 +92,6 @@ function updateToolTip(chosenXAxis, circlesGroup) {
 
 // step 1 import data from csv
 d3.csv("assets/data/data.csv").then(function(journalData) {
-  if (err) throw err;
   // check to see if data was imported
   console.log(journalData);
 
@@ -142,35 +141,80 @@ d3.csv("assets/data/data.csv").then(function(journalData) {
   var xlabelsGroup = chartGroup.append("g")
     .attr("transform", `translate(${width / 2}, ${height + 20})`);
 
-  var povertyLabel = labelsGroup.append("text")
+  var povertyLabel = xlabelsGroup.append("text")
     .attr("x", 0)
     .attr("y", 20)
     .attr("value", "poverty") // value to grab for event listener
     .classed("active", true)
     .text("Poverty Level (%)");
 
-  var incomeLabel = labelsGroup.append("text")
+  var incomeLabel = xlabelsGroup.append("text")
     .attr("x", 0)
     .attr("y", 40)
     .attr("value", "income") // value to grab for event listener
     .classed("inactive", true)
     .text("Income");
 
-    var ageLabel = labelsGroup.append("text")
-      .attr("x", 0)
-      .attr("y", 40)
-      .attr("value", "age") // value to grab for event listener
-      .classed("inactive", true)
-      .text("Age");
+  var ageLabel = xlabelsGroup.append("text")
+    .attr("x", 0)
+    .attr("y", 60)
+    .attr("value", "age") // value to grab for event listener
+    .classed("inactive", true)
+    .text("Age");
 
+  //append y axis
+  chartGroup.append("text")
+    .attr("transform", "rotate(-90)")
+    .attr("y", 0 - margin.left)
+    .attr("x", 0 - (height/2))
+    .attr("dy", "1em")
+    .classed("axis-text", true)
+    .text("Temporary single Y axis variable");
 
+  // updateToolTip function above csv import
+  var circlesGroup = updateToolTip(chosenXAxis, circlesGroup);
 
+  //x axis labels event listener
+  xlabelsGroup.selectAll("text")
+    .on("click", function() {
+      //get value of selection
+      var value = d3.select(this).attr("value");
+      if (value !== chosenXAxis) {
 
-  
-  
+        //replace chosenXAxis with value
+        chosenXAxis = value;
 
+        console.log(chosenXAxis)
 
+        //update x scale for new data
+        xLinearScale = xScale(journalData, chosenXAxis);
 
-}).catch(function(error) {
-  console.log(error);
-});
+        // updates with transition
+        xAxis = renderAxes(xLinearScale, xAxis);
+
+        //update circles with new x values
+        circlesGroup = renderCircles(circlesGroup, xLinearScale, chosenXAxis);
+
+        //updates tooltips with new info
+        circlesGroup = updateToolTip(chosenXAxis, circlesGroup);
+
+        //changes classes to change bold text
+        if (chosenXAxis === "smokes") {
+          albumsLabel
+            .classed("active", true)
+            .classed("inactive", false);
+          hairLengthLabel
+            .classed("active", false)
+            .classed("inactive", true);
+        }
+        else {
+          albumsLabel
+            .classed("active", false)
+            .classed("inactive", true);
+          hairLengthLabel
+            .classed("active", true)
+            .classed("inactive", false);
+        }
+      }
+    });
+})
