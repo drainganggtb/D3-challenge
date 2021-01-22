@@ -29,7 +29,9 @@ var chartGroup = svg.append("g")
 
 //import data from csv
 d3.csv("assets/data/data.csv").then(function(journalData) {
-    journalData.forEach(function(data) {
-        data.
+  console.log(journalData);
+
+  journalData.forEach(function(data) {
+      data.
     })
 })
