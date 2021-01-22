@@ -53,16 +53,15 @@ function yScale(journalData, chosenYAxis) {
 function renderXAxis(newXScale, xAxis) {
   var bottomAxis = d3.axisBottom(newXScale);
 
-// function to update yAxis var upon click on axis label
-function renderYAxis(newYScale, yAxis) {
-  var leftAxis = d3.axisLeft(newYScale);
-
   xAxis.transition()
     .duration(1000)
     .call(bottomAxis);
 
   return xAxis;
 
+// function to update yAxis var upon click on axis label
+function renderYAxis(newYScale, yAxis) {
+  var leftAxis = d3.axisLeft(newYScale);
   yAxis.transition()
     .duration(1000)
     .call(leftAxis);
@@ -154,7 +153,7 @@ d3.csv("assets/data/data.csv").then(function(journalData) {
     .call(bottomAxis);
 
   var yAxis = chartGroup.append("g")
-    .classed("left-axis", true)
+    .classed("y-axis", true)
     .call(leftAxis);
 
   // step 5: create circles
