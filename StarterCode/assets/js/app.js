@@ -137,9 +137,40 @@ d3.csv("assets/data/data.csv").then(function(journalData) {
     .attr("r", "15")
     .attr("fill", "pink")
     .attr("opacity", ".5");
+
+  //create group for x axis labels
+  var xlabelsGroup = chartGroup.append("g")
+    .attr("transform", `translate(${width / 2}, ${height + 20})`);
+
+  var povertyLabel = labelsGroup.append("text")
+    .attr("x", 0)
+    .attr("y", 20)
+    .attr("value", "poverty") // value to grab for event listener
+    .classed("active", true)
+    .text("Poverty Level (%)");
+
+  var incomeLabel = labelsGroup.append("text")
+    .attr("x", 0)
+    .attr("y", 40)
+    .attr("value", "income") // value to grab for event listener
+    .classed("inactive", true)
+    .text("Income");
+
+    var ageLabel = labelsGroup.append("text")
+      .attr("x", 0)
+      .attr("y", 40)
+      .attr("value", "age") // value to grab for event listener
+      .classed("inactive", true)
+      .text("Age");
+
+
+
+
   
   
 
 
 
-})
+}).catch(function(error) {
+  console.log(error);
+});
