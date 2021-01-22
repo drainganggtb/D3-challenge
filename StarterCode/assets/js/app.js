@@ -47,6 +47,8 @@ function renderAxes(newXScale, xAxis) {
   xAxis.transition()
     .duration(1000)
     .call(bottomAxis);
+
+  return xAxis;
 }
 
 //function used to update circles group with a transition to new circles
@@ -74,7 +76,7 @@ function updateToolTip(chosenXAxis, circlesGroup) {
     .attr("class", "tooltip")
     .offset([80, -60])
     .html(function(d) {
-      return (`${d.attr}<br>${label} ${d[chosenXAxis]}`);
+      return (`${d.abbr}<br>${label} ${d[chosenXAxis]}`);
     });
 
   circlesGroup.call(toolTip);
@@ -118,7 +120,7 @@ d3.csv("assets/data/data.csv").then(function(journalData) {
   var leftAxis = d3.axisLeft(yLinearScale);
 
   //step 4 append axes to chart
-  chartGroup.append("g")
+  var xAxis = chartGroup.append("g")
     .classed("x-axis", true)
     .attr("transform", `translate(0, ${height})`)
     .call(bottomAxis);
