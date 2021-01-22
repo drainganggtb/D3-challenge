@@ -1,13 +1,13 @@
 
 // Step 1: Set up our chart
 //= ================================
-var svgWidth = 960;
+var svgWidth = 980;
 var svgHeight = 500;
 
 var margin = {
   top: 20,
   right: 40,
-  bottom: 60,
+  bottom: 90,
   left: 50
 };
 
@@ -140,6 +140,7 @@ d3.csv("assets/data/data.csv").then(function(journalData) {
     .attr("r", "15")
     .attr("fill", "pink")
     .attr("opacity", ".5");
+  
 
   //create group for x axis labels
   var xlabelsGroup = chartGroup.append("g")
@@ -218,13 +219,38 @@ d3.csv("assets/data/data.csv").then(function(journalData) {
           povertyLabel
             .classed("active", false)
             .classed("inactive", true);
+        }
+        if (chosenXAxis === "income") {
+          povertyLabel
+            .classed("active", false)
+            .classed("inactive", true);
           incomeLabel
             .classed("active", true)
             .classed("inactive", false);
           ageLabel
+            .classed("active", false)
+            .classed("inactive", true);
+        }
+        else {
+          incomeLabel
+            .classed("active", false)
+            .classed("inactive", true);
+        }
+        if (chosenXAxis === "age") {
+          povertyLabel
+            .classed("active", false)
+            .classed("inactive", true);
+          incomeLabel
+            .classed("active", false)
+            .classed("inactive", true);
+          ageLabel
             .classed("active", true)
             .classed("inactive", false);
         }
-      }
+        else {
+          ageLabel("active", false)
+          .classed("inactive", true)
+        }
+    }
     });
 })
