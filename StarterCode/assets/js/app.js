@@ -31,7 +31,5 @@ var chartGroup = svg.append("g")
 d3.csv("assets/data/data.csv").then(function(journalData) {
   console.log(journalData);
 
-  journalData.forEach(function(data) {
-      data.
-    })
+  
 })
