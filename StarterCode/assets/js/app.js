@@ -27,8 +27,72 @@ var svg = d3
 var chartGroup = svg.append("g")
   .attr("transform", `translate(${margin.left}, ${margin.top})`);
 
+//initial params
+var chosenXAxis = "poverty";
+var chosenYAxis = "smokes";
+
+//function to update x-scale upon click on axis label
+function xScale(journalData, chosenXAxis) {
+  //create scales
+  var xLinearScale = d3.scaleLinear()
+    .domain([d3.min(journalData, d => d[chosenXAxis]) * 0.8,
+      d3.max(journalData, d => d[chosenXAxis]) * 1.2])
+    .range([0, width]);
+  return xLinearScale;
+}
+// function to update xAxis var upon click on axis label
+function renderAxes(newXScale, xAxis) {
+  var bottomAxis = d3.axisBottom(newXScale);
+
+  xAxis.transition()
+    .duration(1000)
+    .call(bottomAxis);
+}
+
+//function used to update circles group with a transition to new circles
+function renderCircles(circlesGroup, newXScale, chosenXAxis) {
+  circlesGroup.transition()
+    .duration(1000)
+    .attr("cx", d => newXScale(d[chosenXAxis]));
+}
+
+// function to update circlesGroup with new tooltip
+function updateToolTip(chosenXAxis, circlesGroup) {
+  var label;
+
+  if (chosenXAxis === "poverty") {
+    label = "Poverty: ";
+  }
+  if (chosenXAxis === "income") {
+    label = "Income: ";
+  }
+  else {
+    label = "Age: ";
+  }
+
+  var toolTip = d3.tip()
+    .attr("class", "tooltip")
+    .offset([80, -60])
+    .html(function(d) {
+      return (`${d.attr}<br>${label} ${d[chosenXAxis]}`);
+    });
+
+  circlesGroup.call(toolTip);
+
+  circlesGroup.on("mouseover", function(data) {
+    toolTip.show(data);
+  })
+    // onmouseout event
+    .on("mouseout", function(data, index) {
+      toolTip.hide(data);
+    });
+  
+  return circlesGroup;
+}
+
 // step 1 import data from csv
 d3.csv("assets/data/data.csv").then(function(journalData) {
+  if (err) throw err;
   // check to see if data was imported
   console.log(journalData);
 
@@ -45,9 +109,7 @@ d3.csv("assets/data/data.csv").then(function(journalData) {
   });
 
   // step 2 create scale functions
-  var xLinearScale = d3.scaleLinear()
-    .domain([7, d3.max(journalData, d => d.poverty)])
-    .range([0, width]);
+  var xLinearScale = xScale(journalData, chosenXAxis);
   var yLinearScale = d3.scaleLinear()
     .domain([0, d3.max(journalData, d => d.smokes)])
     .range([height, 0]);
@@ -58,8 +120,10 @@ d3.csv("assets/data/data.csv").then(function(journalData) {
 
   //step 4 append axes to chart
   chartGroup.append("g")
-  .attr("transform", `translate(0, ${height})`)
+    .classed("x-axis", true)
+    .attr("transform", `translate(0, ${height})`)
     .call(bottomAxis);
+
   chartGroup.append("g")
     .call(leftAxis);
 
@@ -68,11 +132,13 @@ d3.csv("assets/data/data.csv").then(function(journalData) {
     .data(journalData)
     .enter()
     .append("circle")
-    .attr("cx", d => xLinearScale(d.poverty))
+    .attr("cx", d => xLinearScale(d[chosenXAxis]))
     .attr("cy", d => yLinearScale(d.smokes))
     .attr("r", "15")
     .attr("fill", "pink")
     .attr("opacity", ".5");
+  
+  
 
 
 
