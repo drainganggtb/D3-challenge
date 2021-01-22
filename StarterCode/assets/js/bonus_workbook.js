@@ -46,7 +46,7 @@ function yScale(journalData, chosenYAxis) {
   var yLinearScale = d3.scaleLinear()
     .domain([d3.min(journalData, d => d[chosenYAxis]) * 0.8,
       d3.max(journalData, d => d[chosenYAxis]) * 1.2])
-    .range([0, width]);
+    .range([width, 0]);
   return YLinearScale;
 }
 // function to update xAxis var upon click on axis label
