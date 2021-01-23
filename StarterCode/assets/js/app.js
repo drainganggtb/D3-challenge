@@ -60,25 +60,27 @@ function renderCircles(circlesGroup, newXScale, chosenXAxis) {
   return circlesGroup;
 }
 
+
+
 // function to update circlesGroup with new tooltip
 function updateToolTip(chosenXAxis, circlesGroup) {
-  var label;
+  var xlabel;
 
   if (chosenXAxis === "poverty") {
-    label = "Poverty: ";
+    xlabel = "Poverty: ";
   }
   if (chosenXAxis === "income") {
-    label = "Income: ";
+    xlabel = "Income: ";
   }
   else {
-    label = "Age: ";
+    xlabel = "Age: ";
   }
 
   var toolTip = d3.tip()
     .attr("class", "tooltip")
     .offset([80, -60])
     .html(function(d) {
-      return (`${d.abbr}<br>${label} ${d[chosenXAxis]}`);
+      return (`${d.abbr}<br>${xlabel} ${d[chosenXAxis]}`);
     });
 
   circlesGroup.call(toolTip);
@@ -93,6 +95,8 @@ function updateToolTip(chosenXAxis, circlesGroup) {
   
   return circlesGroup;
 }
+
+
 
 // step 1 import data from csv
 d3.csv("assets/data/data.csv").then(function(journalData) {
@@ -141,7 +145,22 @@ d3.csv("assets/data/data.csv").then(function(journalData) {
     .attr("cy", d => yLinearScale(d.smokes))
     .attr("r", "15")
     .attr("fill", "pink")
-    .attr("opacity", ".5");
+    .attr("opacity", ".5")
+    .text(function(d) {
+      return d.abbr;
+  })
+  //add abbr
+  var abbrGroup = chartGroup.selectAll("texts")
+    .data(journalData)
+    .enter()
+    .append("text")
+    .attr("x", d => xLinearScale(d[chosenXAxis]))
+    .attr("y", d => yLinearScale(d[chosenYAxis]))
+    .attr("dx", function(d){return -10})
+    .attr("dy", function(d){return +6})
+    .text(function(d) {
+      return d.abbr;
+    })
   
 
   //create group for x axis labels
@@ -176,9 +195,8 @@ d3.csv("assets/data/data.csv").then(function(journalData) {
     .attr("x", 0 - (height/2))
     .attr("dy", "1em")
     .classed("axis-text", true)
-    .text("Temporary single Y axis variable");
+    .text("Smokes (%)");
 
-  // updateToolTip function above csv import
   var circlesGroup = updateToolTip(chosenXAxis, circlesGroup);
 
   //x axis labels event listener
