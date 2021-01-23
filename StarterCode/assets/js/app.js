@@ -59,6 +59,14 @@ function renderCircles(circlesGroup, newXScale, chosenXAxis) {
 
   return circlesGroup;
 }
+//trying to render abbrs in conjunction with new circles
+function renderAbbr(abbrGroup, newXScale, chosenXAxis) {
+  abbrGroup.transition()
+    .duration(1000)
+    .attr("cx", d => newXScale(d[chosenXAxis]))
+    .attr("texts", d => d.attr);
+
+}
 
 
 
