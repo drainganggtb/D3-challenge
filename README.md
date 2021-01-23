@@ -1,6 +1,6 @@
 # D3-challenge
 Using D3.js to investigate U.S. Census Bureau and the Behavioral Risk Factor Surveillance System datasets
-
+![alt text](Images/d3.png)
 # Background
 
 This project centers around data visualization using D3.js, with the premise being working for a major newspaper. You are tasked with analyzing the current trends shaping people's lives, as well as creating charts, graphs, and interactive elements to illustrate findings. 
