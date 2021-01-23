@@ -1,6 +1,6 @@
 
 // Step 1: Set up our chart
-//= ================================
+//================================
 var svgWidth = 1000;
 var svgHeight = 500;
 
@@ -19,7 +19,7 @@ var height = svgHeight - margin.top - margin.bottom;
 // and shift the latter by left and top margins.
 // =================================
 var svg = d3
-  .select("body")
+  .select("scatter")
   .append("svg")
   .attr("width", svgWidth)
   .attr("height", svgHeight);

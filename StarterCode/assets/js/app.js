@@ -109,6 +109,7 @@ d3.csv("assets/data/data.csv").then(function(journalData) {
     data.obesity = +data.obesity;
     data.smokes = +data.smokes;
     data.healthcare = +data.healthcare;
+    data.abbr = data.abbr;
   });
 
   
