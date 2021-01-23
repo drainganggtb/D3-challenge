@@ -60,7 +60,13 @@ function renderCircles(circlesGroup, newXScale, chosenXAxis) {
   return circlesGroup;
 }
 //trying to render abbrs in conjunction with new circles
+function renderAbbr(abbrGroup, newXScale, chosenXAxis) {
+  abbrGroup.transition()
+    .duration(1000)
+    .attr("cx", d => newXScale(d.abbr));
 
+  return abbrGroup;
+}
 
 
 
@@ -97,7 +103,6 @@ function updateToolTip(chosenXAxis, circlesGroup) {
   
   return circlesGroup;
 }
-//trying to make it so abbr can be moused over to view tooltip
 
 
 
