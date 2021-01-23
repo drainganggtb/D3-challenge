@@ -97,6 +97,8 @@ function updateToolTip(chosenXAxis, circlesGroup) {
   
   return circlesGroup;
 }
+//trying to make it so abbr can be moused over to view tooltip
+
 
 
 

@@ -118,7 +118,7 @@ function updateToolTip(chosenXAxis, circlesGroup) {
     });
   
   return circlesGroup;
-}
+  }
 
 // step 1 import data from csv
 d3.csv("assets/data/data.csv").then(function(journalData) {
