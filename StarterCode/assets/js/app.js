@@ -60,13 +60,7 @@ function renderCircles(circlesGroup, newXScale, chosenXAxis) {
   return circlesGroup;
 }
 //trying to render abbrs in conjunction with new circles
-function renderAbbr(abbrGroup, newXScale, chosenXAxis) {
-  abbrGroup.transition()
-    .duration(1000)
-    .attr("cx", d => newXScale(d[chosenXAxis]))
-    .attr("texts", d => d.attr);
 
-}
 
 
 
@@ -164,8 +158,9 @@ d3.csv("assets/data/data.csv").then(function(journalData) {
     .append("text")
     .attr("x", d => xLinearScale(d[chosenXAxis]))
     .attr("y", d => yLinearScale(d[chosenYAxis]))
-    .attr("dx", function(d){return -10})
-    .attr("dy", function(d){return +6})
+    .attr("dx", function(d){return -7})
+    .attr("dy", function(d){return +5})
+    .attr("font-size", 10)
     .text(function(d) {
       return d.abbr;
     })
